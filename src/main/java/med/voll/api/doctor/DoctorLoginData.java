@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import med.voll.api.address.AddressData;
 
-public record LoginData(
+public record DoctorLoginData(
         @NotBlank
         String name,
 

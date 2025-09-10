@@ -34,4 +34,16 @@ public class Patients {
         this.address = new Address(patientsData.addressData());
     }
 
+    public void updatePatient(PatientsUpdateData patientsUpdateData){
+        if (patientsUpdateData.name() != null){
+            this.name = patientsUpdateData.name();
+        }
+        if(patientsUpdateData.email() != null){
+            this.email = patientsUpdateData.email();
+        }
+        if(patientsUpdateData.addressData() != null){
+            this.address.updateAddress(patientsUpdateData.addressData());
+        }
+    }
+
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import med.voll.api.address.Address;
+import med.voll.api.address.AddressData;
 
 @Table(name = "doctors")
 @Entity(name = "Doctor")
@@ -30,13 +31,26 @@ public class Doctor {
     @Embedded
     private Address address;
 
-    public Doctor(LoginData loginData){
-        this.name = loginData.name();
-        this.email = loginData.email();
-        this.phone = loginData.phone();
-        this.crm = loginData.crm();
-        this.espec = loginData.espec();
-        this.address = new Address(loginData.addressData());
+    public Doctor(DoctorLoginData doctorLoginData){
+        this.name = doctorLoginData.name();
+        this.email = doctorLoginData.email();
+        this.phone = doctorLoginData.phone();
+        this.crm = doctorLoginData.crm();
+        this.espec = doctorLoginData.espec();
+        this.address = new Address(doctorLoginData.addressData());
+
+    }
+
+    public void updateDoctor(DoctorUpdateData doctorUpdateData){
+        if(doctorUpdateData.name() != null){
+            this.name = doctorUpdateData.name();
+        }
+        if(doctorUpdateData.phone() != null){
+            this.phone = doctorUpdateData.phone();
+        }
+        if (doctorUpdateData.addressData() != null){
+            this.address.updateAddress(doctorUpdateData.addressData());
+        }
 
     }
 

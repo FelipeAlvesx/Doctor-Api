@@ -30,4 +30,28 @@ public class Address {
         this.uf = addressData.uf();
     }
 
+    public void updateAddress(AddressData addressData){
+        if(addressData.logradouro() != null){
+            this.logradouro = addressData.logradouro();
+        }
+        if(addressData.bairro() != null){
+            this.bairro = addressData.bairro();
+        }
+        if (addressData.cep() != null){
+            this.cep = addressData.cep();
+        }
+        if(addressData.numero() != null){
+            this.numero = addressData.numero();
+        }
+        if(addressData.complemento() != null){
+            this.complemento = addressData.complemento();
+        }
+        if(addressData.cidade() != null){
+            this.cidade = addressData.cidade();
+        }
+        if(addressData.uf() != null){
+            this.uf = addressData.uf();
+        }
+    }
+
 }
