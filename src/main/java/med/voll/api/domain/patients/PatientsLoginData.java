@@ -1,10 +1,10 @@
-package med.voll.api.patients;
+package med.voll.api.domain.patients;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import med.voll.api.address.AddressData;
+import med.voll.api.domain.address.AddressData;
 
 public record PatientsLoginData(
 
