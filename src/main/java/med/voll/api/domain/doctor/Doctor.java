@@ -31,7 +31,10 @@ public class Doctor {
     @Embedded
     private Address address;
 
+    private Boolean active;
+
     public Doctor(DoctorLoginData doctorLoginData){
+        this.active = true;
         this.name = doctorLoginData.name();
         this.email = doctorLoginData.email();
         this.phone = doctorLoginData.phone();
@@ -54,4 +57,7 @@ public class Doctor {
 
     }
 
+    public void delete() {
+        this.active = false;
+    }
 }

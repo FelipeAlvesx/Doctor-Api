@@ -9,6 +9,7 @@ public record PatientsUpdateData(
         Long id,
         String name,
         String email,
+        String phone,
         AddressData addressData
 ) {
 }

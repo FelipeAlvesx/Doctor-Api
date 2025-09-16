@@ -4,15 +4,16 @@ package med.voll.api.patients;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import med.voll.api.address.Address;
-import med.voll.api.address.AddressData;
 
 @Entity
 @Table(name = "patients")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class Patients {
 
     @Id
@@ -26,12 +27,15 @@ public class Patients {
     @Embedded
     private Address address;
 
-    public Patients(PatientsData patientsData){
-        this.name = patientsData.name();
-        this.email = patientsData.email();
-        this.cpf = patientsData.cpf();
-        this.phone = patientsData.phone();
-        this.address = new Address(patientsData.addressData());
+    private Boolean active;
+
+    public Patients(PatientsLoginData patientsLoginData){
+        this.active = true;
+        this.name = patientsLoginData.name();
+        this.email = patientsLoginData.email();
+        this.cpf = patientsLoginData.cpf();
+        this.phone = patientsLoginData.phone();
+        this.address = new Address(patientsLoginData.addressData());
     }
 
     public void updatePatient(PatientsUpdateData patientsUpdateData){
@@ -44,6 +48,13 @@ public class Patients {
         if(patientsUpdateData.addressData() != null){
             this.address.updateAddress(patientsUpdateData.addressData());
         }
+        if(patientsUpdateData.phone() != null){
+            this.phone = patientsUpdateData.phone();
+        }
+    }
+
+    public void delete(){
+        this.active = false;
     }
 
 }
