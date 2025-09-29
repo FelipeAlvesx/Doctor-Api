@@ -52,7 +52,7 @@ public class doctorController {
     /* Delete */
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
         var doctor = doctorRepository.getReferenceById(id);
         doctor.delete();
 

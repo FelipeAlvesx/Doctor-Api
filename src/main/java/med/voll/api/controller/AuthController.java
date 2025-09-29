@@ -26,7 +26,7 @@ public class AuthController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity login(@RequestBody @Valid UserDataLogin userDataLogin){
+    public ResponseEntity<TokenResponse> login(@RequestBody @Valid UserDataLogin userDataLogin){
 
         /* -> Transforma os dados recebidos na request no objeto esperado para a funcao de auth (Instanciando essa funcao */
         var authenticationToken = new UsernamePasswordAuthenticationToken(userDataLogin.username(), userDataLogin.password());
