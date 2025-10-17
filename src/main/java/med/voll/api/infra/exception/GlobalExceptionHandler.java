@@ -12,7 +12,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.List;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -21,7 +20,6 @@ public class GlobalExceptionHandler {
     /* Identify Error and call this function */
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Void> notFoundException(){
-
         return ResponseEntity.notFound().build();
     }
 
@@ -51,7 +49,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity ErrorAccessDenied() {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("ACCESS DENIED");
-
     }
 
     @ExceptionHandler(Exception.class)
@@ -64,7 +61,6 @@ public class GlobalExceptionHandler {
             this(erro.getField(), erro.getDefaultMessage());
         }
     }
-
 
     /* DTO */
     private record DataValidationException(String field, String message){

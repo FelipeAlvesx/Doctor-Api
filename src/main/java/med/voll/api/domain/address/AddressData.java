@@ -12,7 +12,7 @@ public record  AddressData(
         String bairro,
 
         @NotBlank
-        @Pattern(regexp = "\\d{8}")
+        @Pattern(regexp = "\\d{8}", message = "cep inválido")
         String cep,
 
         @NotBlank
