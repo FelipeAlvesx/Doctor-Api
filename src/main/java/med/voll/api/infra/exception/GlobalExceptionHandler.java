@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(AppointmentValidateException.class)
+    public ResponseEntity<String> handleAppointmentValidateException(AppointmentValidateException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
 
     /* Identify Error and call this function */
     @ExceptionHandler(EntityNotFoundException.class)

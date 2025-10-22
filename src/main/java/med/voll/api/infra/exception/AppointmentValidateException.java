@@ -1,4 +1,4 @@
-package med.voll.api.domain.appointment;
+package med.voll.api.infra.exception;
 
 public class AppointmentValidateException extends RuntimeException {
     public AppointmentValidateException(String message) {

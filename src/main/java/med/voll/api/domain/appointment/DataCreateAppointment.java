@@ -6,6 +6,7 @@ import med.voll.api.domain.doctor.Espec;
 
 import java.time.LocalDateTime;
 
-public record DataCreateAppointment(@NotNull Long idDoctor, @NotNull Long idPatient, @NotNull @Future LocalDateTime date, Espec espec){
+public record DataCreateAppointment(Long idDoctor, Long idPatient, LocalDateTime date, Espec espec){
+
 
 }

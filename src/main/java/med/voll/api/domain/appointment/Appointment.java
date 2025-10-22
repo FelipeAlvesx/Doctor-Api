@@ -1,14 +1,8 @@
 package med.voll.api.domain.appointment;
 
 import java.time.LocalDateTime;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -37,5 +31,24 @@ public class Appointment {
     private Patients patients;
 
     private LocalDateTime date;
+
+    @Column(name = "cancellation_reason")
+    private String cancellationReason;
+
+    @Enumerated(EnumType.STRING)
+    private AppointmentStatus status;
+
+    public Appointment(Doctor doctor, Patients patients, LocalDateTime date) {
+        this.doctor = doctor;
+        this.patients = patients;
+        this.date = date;
+        this.status = AppointmentStatus.SCHEDULED;
+        this.cancellationReason = null;
+    }
+
+    public void updateStatus(DataCancelAppointment dataCancelAppointment) {
+        this.status = AppointmentStatus.CANCELED;
+        this.cancellationReason = dataCancelAppointment.cancelletionReason();
+    }
     
 }
