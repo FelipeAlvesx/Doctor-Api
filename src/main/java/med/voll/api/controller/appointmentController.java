@@ -2,6 +2,7 @@ package med.voll.api.controller;
 
 import java.time.LocalDateTime;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import med.voll.api.domain.appointment.AppointmentService;
 import med.voll.api.domain.appointment.DataCancelAppointment;
 import med.voll.api.domain.appointment.DataCreateAppointment;
@@ -20,6 +21,7 @@ import jakarta.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("appointments")
+@SecurityRequirement(name = "bearer-key")
 public class appointmentController {
 
     @Autowired

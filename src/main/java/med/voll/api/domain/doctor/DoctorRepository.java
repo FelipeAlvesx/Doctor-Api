@@ -27,7 +27,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
                                     where
                                     a.date = :date
                                     and
-                                    d.cancellationReason is null
+                                    a.cancellationReason is null
                             )
                             order by rand()
                             limit 1
