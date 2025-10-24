@@ -1,7 +1,5 @@
 package med.voll.api.controller;
 
-import java.time.LocalDateTime;
-
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import med.voll.api.domain.appointment.AppointmentService;
 import med.voll.api.domain.appointment.DataCancelAppointment;
@@ -16,20 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("appointments")
 @SecurityRequirement(name = "bearer-key")
-public class appointmentController {
+public class AppointmentController {
 
     @Autowired
     private AppointmentService appointmentService;
 
     @PostMapping
     @Transactional
-    public ResponseEntity<?> create(@RequestBody @Valid DataCreateAppointment data){
+    public ResponseEntity<DetailsAppointment> create(@RequestBody @Valid DataCreateAppointment data){
 
         var dto = appointmentService.createAppointment(data);
         return ResponseEntity.ok(dto);

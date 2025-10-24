@@ -15,7 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping("doctor")
 @SecurityRequirement(name = "bearer-key")
-public class doctorController {
+public class DoctorController {
 
     @Autowired
     private DoctorRepository doctorRepository;
@@ -54,7 +54,7 @@ public class doctorController {
     /* Delete */
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable Long id){
         var doctor = doctorRepository.getReferenceById(id);
         doctor.delete();
 

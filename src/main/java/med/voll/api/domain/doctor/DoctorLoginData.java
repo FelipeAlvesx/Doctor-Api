@@ -8,6 +8,10 @@ import jakarta.validation.constraints.Pattern;
 import med.voll.api.domain.address.AddressData;
 
 public record DoctorLoginData(
+
+
+        Long id,
+
         @NotBlank
         String name,
 
@@ -28,5 +32,13 @@ public record DoctorLoginData(
         @NotNull
         @Valid
         AddressData addressData
-) {
+)
+
+
+{
+
+
+
+
+
 }
