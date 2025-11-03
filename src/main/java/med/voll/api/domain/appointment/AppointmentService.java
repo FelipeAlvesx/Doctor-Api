@@ -43,7 +43,6 @@ public class AppointmentService {
             throw new AppointmentValidateException("No doctor available at this date");
         }
 
-
         globalAppointmentValidates.forEach(v -> v.validate(dataCreateAppointment));
 
         var appointment = new Appointment(doctor, patient, dataCreateAppointment.date());
