@@ -1,4 +1,4 @@
-# 🏥 Consultório API - Sistema de Agendamento Médico
+# 🏥 Doctor API - Sistema de Agendamento Médico
 
 Esta é uma API RESTful desenvolvida em Java e Spring Boot para gerenciamento de um consultório médico, abrangendo cadastros de médicos, pacientes e o agendamento inteligente de consultas. O sistema é seguro, seguindo as melhores práticas de autenticação e autorização via JWT (JSON Web Token).
 
