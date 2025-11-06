@@ -1,20 +1,20 @@
 # 🏥 Doctor API - Sistema de Agendamento Médico
 
-Esta é uma API RESTful desenvolvida em Java e Spring Boot para gerenciamento de um consultório médico, abrangendo cadastros de médicos, pacientes e o agendamento inteligente de consultas. O sistema é seguro, seguindo as melhores práticas de autenticação e autorização via JWT (JSON Web Token).
+Esta é uma API RESTful robusta desenvolvida em Java e Spring Boot para o gerenciamento de um consultório médico. O sistema abrange o cadastro de médicos e pacientes, e o agendamento inteligente de consultas. O foco é na **integridade dos dados**, **segurança** (via JWT), e aplicação de **regras de negócio** para agendamentos válidos.
 
-## ✨ Funcionalidades Principais
+## ✨ Funcionalidades e Escopo da Aplicação
 
 * **Gerenciamento Completo (CRUD):**
-    * Cadastro e manutenção de **Médicos**.
-    * Cadastro e manutenção de **Pacientes**.
+    * Cadastro e manutenção de **Médicos** (CRUD).
+    * Cadastro e manutenção de **Pacientes** (CRUD).
 * **Agendamento Inteligente de Consultas:**
     * Criação de consultas baseada na **especialidade** do médico.
-    * **Regras de Negócio Integradas** para garantir a validade do agendamento.
-* **Segurança:** Autenticação e Autorização robusta utilizando JWT (via Auth0).
+    * Seleção automática de um médico disponível caso não seja especificado.
+* **Segurança:** Autenticação e Autorização robusta utilizando **JWT (JSON Web Token)**.
 
 ## 🛡️ Regras de Negócio e Validações
 
-O coração desta API é a camada de serviço que impõe validações críticas no agendamento para garantir a qualidade do serviço.
+O coração desta API reside na camada de serviço, que impõe validações críticas no agendamento para garantir a qualidade do serviço.
 
 | Regra de Negócio | Descrição |
 | :--- | :--- |
@@ -23,72 +23,89 @@ O coração desta API é a camada de serviço que impõe validações críticas 
 | **Antecedência Mínima** | O agendamento deve ser feito com pelo menos 30 minutos de antecedência. |
 | **Disponibilidade do Paciente** | Um paciente **não pode** ter duas consultas no mesmo dia. |
 | **Disponibilidade do Médico** | Um médico **não pode** ter duas consultas no mesmo horário. |
-| **Escolha Automática de Médico** | Se o ID do médico não for fornecido, o sistema seleciona um **médico disponível** que atenda à especialidade solicitada. |
+| **Escolha Automática de Médico** | O sistema deve selecionar o **primeiro médico disponível** que atenda à especialidade solicitada. |
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Tecnologias e Dependências
 
-* **Linguagem:** Java
-* **Framework:** Spring Boot 3
-* **Banco de Dados:** Spring Data JPA / Hibernate (H2 para testes e desenvolvimento)
-* **Dependências:**
-    * **Lombok:** Para reduzir o *boilerplate* de *getters*, *setters* e construtores.
-    * **Spring Security:** Para segurança da aplicação.
-    * **Auth0:** Utilizado para geração e validação de JWT.
-* **Testes:**
-    * **JUnit 5:** Framework de teste.
-    * **Mockito:** Para criação de *mocks* e simulação de dependências.
+| Categoria | Tecnologia | Uso |
+| :--- | :--- | :--- |
+| **Linguagem/Framework** | Java, Spring Boot 3 | Desenvolvimento Backend da API. |
+| **Persistência** | Spring Data JPA / Hibernate | Gerenciamento e mapeamento Objeto-Relacional. |
+| **Banco de Dados** | **MySQL** | Banco de dados relacional principal. |
+| **Documentação** | **Swagger / OpenAPI** | Documentação interativa e *testing* dos *endpoints*. |
+| **Segurança** | Spring Security, **JWT (via Auth0)** | Implementação de autenticação *stateless*. |
+| **Testes** | JUnit 5, **Mockito** | Testes Unitários, de Lógica e simulação de dependências. |
+| **Auxílio Código** | Lombok | Redução de *boilerplate* (getters, setters, construtores). |
 
 ## 🧪 Estratégia de Testes
 
-A aplicação possui uma cobertura de testes focada na integridade do banco de dados e na lógica de negócio essencial.
+A cobertura de testes é focada em garantir a estabilidade e o comportamento esperado das regras de negócio.
 
-* **Testes de Repository (Unitários/Integração):** Validação da persistência de dados.
+* **Testes de Repository (Integração):** Validação da persistência de dados no banco (simulado ou H2).
 * **Testes de Lógica de Negócio (`@Service`):**
-    * Foco especial na funcionalidade de **seleção automática de médico disponível**, garantindo que as regras de disponibilidade e especialidade sejam respeitadas.
+    * Teste crucial para a funcionalidade de **seleção automática de médico disponível**, garantindo que as regras de disponibilidade e especialidade sejam rigorosamente aplicadas.
 * **Testes de Controller (`@RestController`):**
-    * Teste de integração do *endpoint* `GET /doctor/{id}` para garantir a correta recuperação e serialização dos dados de um médico específico.
+    * Teste de integração do *endpoint* `GET /doctor/{id}` para garantir a correta resposta em diferentes cenários (sucesso, not found, etc.).
 
 ## 🔐 Autenticação e Acesso à API
 
-Esta API exige um *token* JWT válido para acessar a maioria dos *endpoints*.
+Para acessar os *endpoints* protegidos (a maioria dos CRUDs e agendamento), é necessário um *token* JWT.
 
 1.  **Obter Token:**
     * **Endpoint:** `POST /login`
-    * **Corpo da Requisição (JSON):** `{ "login": "usuario", "senha": "senha" }`
-    * **Resposta:** Receberá um *token* JWT.
+    * **Corpo da Requisição (JSON):** Envie as credenciais de um usuário cadastrado.
+    * **Resposta:** O token JWT é retornado no corpo da resposta.
 2.  **Usar Token:**
-    * Adicione o *token* no cabeçalho de todas as requisições protegidas:
-    ```
-    Authorization: Bearer <SEU_JWT_AQUI>
-    ```
+    * Inclua o *token* no cabeçalho de todas as requisições protegidas:
+        ```
+        Authorization: Bearer <SEU_JWT_AQUI>
+        ```
 
-## ⚙️ Como Executar a Aplicação
+## ⚙️ Como Configurar e Executar a Aplicação
 
 ### Pré-requisitos
 
 * Java Development Kit (JDK) 17 ou superior
+* MySQL Server (versão 8.x recomendada)
 * Maven
+* **Cliente HTTP:** **Postman, Insomnia** ou similar (necessário para interagir com a API, especialmente para login e endpoints protegidos).
 
-### Passo a Passo
+### 1. Configuração do MySQL
+
+1.  Crie um novo banco de dados no seu servidor MySQL (ex: `consultorio_db`).
+2.  Atualize o arquivo de configuração (ex: `application.properties` ou `.yml`) com suas credenciais:
+
+    ```properties
+    # Exemplo de configuração no application.properties
+    spring.datasource.url=jdbc:mysql://localhost:3306/consultorio_db?useTimezone=true&serverTimezone=UTC
+    spring.datasource.username=seu_usuario_mysql
+    spring.datasource.password=sua_senha_mysql
+    spring.jpa.hibernate.ddl-auto=update
+    ```
+
+### 2. Execução
 
 1.  **Clone o repositório:**
     ```bash
     git clone [LINK_DO_SEU_REPOSITORIO]
-    cd consultorio-api
+    cd nome-do-projeto
     ```
-2.  **Compile o projeto (Package):**
+2.  **Compile o projeto:**
     ```bash
     ./mvnw clean package
     ```
 3.  **Execute a aplicação:**
     ```bash
-    java -jar target/consultorio-api.jar
+    java -jar target/nome-do-arquivo.jar
     ```
 
-A API estará acessível em `http://localhost:8080`.
+### 🌐 Acessando a Documentação (Swagger UI)
 
-## 📌 Próximos Passos (Melhorias Futuras)
+Após a execução da API, a documentação interativa estará disponível.
 
-* **Documentação Interativa:** Implementar **Swagger/OpenAPI** para documentação de *endpoints*.
-* **Containers:** Criar *Dockerfile* para facilitar a execução via **Docker** em ambientes de produção.
-* **Mensageria:** Implementar comunicação assíncrona (ex: **Kafka**) para notificações de agendamento.
+* **URL:** `http://localhost:8080/swagger-ui.html`
+
+## 📌 Próximos Passos e Melhorias
+
+* **Containers:** Criar *Dockerfile* e **Docker Compose** para inicializar a API e o MySQL com um único comando, simplificando o *setup* para novos desenvolvedores.
+* **Mensageria Assíncrona:** Implementar **Kafka** ou **RabbitMQ** para processar notificações (e-mail, SMS) de agendamento de forma assíncrona.
